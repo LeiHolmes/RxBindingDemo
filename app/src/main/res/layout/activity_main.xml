@@ -9,13 +9,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="15dp">
 
         <Button
-            android:id="@+id/btn_shake"
+            android:id="@+id/btn_rx_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="防抖" />
-    </LinearLayout>
+            android:text="RxView"
+            android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/btn_rx_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RxTextView"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_rx_adapter_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RxAdapterView"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_rx_compound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RxCompoundButton"
+            android:textAllCaps="false" />
+    </LinearLayout>
 </RelativeLayout>

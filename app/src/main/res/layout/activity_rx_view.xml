@@ -9,8 +9,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <Button
+            android:id="@+id/btn_click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="click/long_click"
+            android:textAllCaps="false" />
+
+        <View style="@style/line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="layout"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="change"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+
+        <View style="@style/line_style" />
 
     </LinearLayout>
-
 </RelativeLayout>
