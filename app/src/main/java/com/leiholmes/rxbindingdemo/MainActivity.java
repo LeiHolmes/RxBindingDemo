@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, RxViewActivity.class));
                 break;
             case R.id.btn_rx_text_view:
+                startActivity(new Intent(this, RxTextViewActivity.class));
                 break;
             case R.id.btn_rx_adapter_view:
                 break;

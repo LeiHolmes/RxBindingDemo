@@ -56,6 +56,9 @@ public class RxViewActivity extends AppCompatActivity {
         scrollChange();
     }
 
+    /**
+     * 点击事件
+     */
     private void click() {
         //2s防抖点击
         addDisposable(RxView.clicks(btnClick)
@@ -78,6 +81,9 @@ public class RxViewActivity extends AppCompatActivity {
                 }));
     }
 
+    /**
+     * 绘制事件
+     */
     private void draws() {
         //点击btnDraw调用viewCanvas的绘制
         addDisposable(RxView.clicks(btnDraw)
@@ -100,6 +106,9 @@ public class RxViewActivity extends AppCompatActivity {
                 }));
     }
 
+    /**
+     * 布局改变事件
+     */
     private void layoutChange() {
         //点击btnChange改变btn_layout的布局,防抖2s
         addDisposable(RxView.clicks(btnChange)
@@ -122,6 +131,9 @@ public class RxViewActivity extends AppCompatActivity {
                 }));
     }
 
+    /**
+     * 滑动变化事件
+     */
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void scrollChange() {
         //点击btnScroll模拟让btnScrollLayout滑动

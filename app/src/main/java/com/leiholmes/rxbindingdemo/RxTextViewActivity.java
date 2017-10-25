@@ -1,0 +1,168 @@
+package com.leiholmes.rxbindingdemo;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.jakewharton.rxbinding2.widget.TextViewAfterTextChangeEvent;
+import com.jakewharton.rxbinding2.widget.TextViewBeforeTextChangeEvent;
+import com.jakewharton.rxbinding2.widget.TextViewEditorActionEvent;
+import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
+
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+
+/**
+ * Description:   RxBinding2中RxTextView演示Activity
+ * author         xulei
+ * Date           2017/10/25 13:50
+ */
+public class RxTextViewActivity extends AppCompatActivity {
+    @BindView(R.id.et_rx_text_view)
+    EditText etRxTextView;
+    private CompositeDisposable mCompositeDisposable;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rx_text_view);
+        ButterKnife.bind(this);
+        mCompositeDisposable = new CompositeDisposable();
+        textChanges();
+//        beforeTextChangeEvents();
+//        afterTextChangeEvents();
+        editorActions();
+    }
+
+    /**
+     * TextView内容变化事件
+     * textChanges只返回改变之后的CharSequence
+     * textChangeEvents返回的TextViewTextChangeEvent中包含start，before，text, count等详细信息
+     */
+    private void textChanges() {
+        //textChanges
+        addDisposable(RxTextView.textChanges(etRxTextView)
+                //项目场景中若需要即时根据改变内容请求服务器检索的话，可使用debounce进行限流，就能避免因为用户输入速度过快导致多次请求服务器了。
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                //CharSequence转换为String
+                .map(new Function<CharSequence, String>() {
+                    @Override
+                    public String apply(CharSequence charSequence) throws Exception {
+                        return charSequence.toString();
+                    }
+                })
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.e("rx_binding_test", "textChanges:etRxTextView内容变化了:" + s);
+                        Toast.makeText(RxTextViewActivity.this, "etRxTextView内容变化了", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+
+        //textChangeEvents
+//        addDisposable(RxTextView.textChangeEvents(etRxTextView)
+//                .subscribe(new Consumer<TextViewTextChangeEvent>() {
+//                    @Override
+//                    public void accept(TextViewTextChangeEvent textViewTextChangeEvent) throws Exception {
+//                        Log.e("rx_binding_test", "textChanges:etRxTextView内容变化了:" + "before:" +
+//                                textViewTextChangeEvent.before() + ",start:" + textViewTextChangeEvent.start() +
+//                                ",text:" + textViewTextChangeEvent.text() + ",count:" + textViewTextChangeEvent.count());
+//                        Toast.makeText(RxTextViewActivity.this, "etRxTextView内容变化了", Toast.LENGTH_SHORT).show();
+//                    }
+//                }));
+    }
+
+    /**
+     * TextView内容变化前的事件
+     */
+    private void beforeTextChangeEvents() {
+        addDisposable(RxTextView.beforeTextChangeEvents(etRxTextView)
+                .subscribe(new Consumer<TextViewBeforeTextChangeEvent>() {
+                    @Override
+                    public void accept(TextViewBeforeTextChangeEvent textViewBeforeTextChangeEvent) throws Exception {
+                        Log.e("rx_binding_test", "beforeTextChangeEvents:etRxTextView内容变化前:" + textViewBeforeTextChangeEvent.text());
+                        Toast.makeText(RxTextViewActivity.this, "etRxTextView内容变化前", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+    }
+
+    /**
+     * TextView内容变化后的事件
+     */
+    private void afterTextChangeEvents() {
+        addDisposable(RxTextView.afterTextChangeEvents(etRxTextView)
+                .subscribe(new Consumer<TextViewAfterTextChangeEvent>() {
+                    @Override
+                    public void accept(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) throws Exception {
+                        Log.e("rx_binding_test", "afterTextChangeEvents:etRxTextView内容变化后");
+                        Toast.makeText(RxTextViewActivity.this, "etRxTextView内容变化后", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+    }
+
+    /**
+     * 输入完成点击回车键事件
+     * editorActions相当于简化版原来的setOnEditorActionListener
+     * editorActionEvents额外返回当前View，ActionId，KeyEvent等信息
+     * 走两次的解决办法：KeyEvent包含down和up事件，所以走两次。根据KeyEvent加入一种判断即可
+     */
+    private void editorActions() {
+        addDisposable(RxTextView.editorActions(etRxTextView)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e("rx_binding_test", "editorActions:输入完毕，点击回车:");
+                        Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+//        addDisposable(RxTextView.editorActionEvents(etRxTextView)
+//                .subscribe(new Consumer<TextViewEditorActionEvent>() {
+//                    @Override
+//                    public void accept(TextViewEditorActionEvent textViewEditorActionEvent) throws Exception {
+//                        KeyEvent keyEvent = textViewEditorActionEvent.keyEvent();
+//                        //解决走两次问题
+//                        if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+//                            Log.e("rx_binding_test", "editorActionEvents:输入完毕，点击回车:" + textViewEditorActionEvent.keyEvent());
+//                            Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }));
+    }
+
+    /**
+     * 添加订阅
+     */
+    public void addDisposable(Disposable mDisposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(mDisposable);
+    }
+
+    /**
+     * 取消所有订阅
+     */
+    public void unSubscribe() {
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.clear();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unSubscribe();
+        super.onDestroy();
+    }
+}
