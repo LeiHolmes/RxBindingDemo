@@ -42,8 +42,55 @@
                 android:textAllCaps="false" />
         </LinearLayout>
 
-
         <View style="@style/line_style" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/view_canvas"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:background="#aaaaaa"
+                android:text="canvas"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_draw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="draw"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <View
+            style="@style/line_style"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_scroll_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="layout"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_scroll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="scroll"
+                android:textAllCaps="false" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
