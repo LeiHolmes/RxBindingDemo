@@ -14,7 +14,7 @@ import butterknife.OnClick;
  * Date           2017/10/25 09:51
  */
 public class MainActivity extends BaseActivity {
-    
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -25,7 +25,8 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_rx_view, R.id.btn_rx_text_view, R.id.btn_rx_adapter_view, R.id.btn_rx_compound})
+    @OnClick({R.id.btn_rx_view, R.id.btn_rx_text_view, R.id.btn_rx_adapter_view, R.id.btn_rx_compound,
+            R.id.btn_count_down})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_rx_view:
@@ -39,6 +40,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_rx_compound:
                 startActivity(new Intent(this, RxCompoundButtonActivity.class));
+                break;
+            case R.id.btn_count_down:
+                startActivity(new Intent(this, CountDownActivity.class));
                 break;
         }
     }

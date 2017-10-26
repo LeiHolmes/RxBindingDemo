@@ -39,5 +39,11 @@
             android:layout_height="wrap_content"
             android:text="RxCompoundButton"
             android:textAllCaps="false" />
+        <Button
+            android:id="@+id/btn_count_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="倒计时获取验证码"
+            android:textAllCaps="false" />
     </LinearLayout>
 </RelativeLayout>

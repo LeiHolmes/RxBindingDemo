@@ -20,7 +20,8 @@
         <activity android:name=".ui.RxTextViewActivity" />
         <activity android:name=".ui.RxCompoundButtonActivity" />
         <activity android:name=".ui.RxAdapterViewActivity" />
-        <activity android:name=".ui.BaseActivity"></activity>
+        <activity android:name=".ui.BaseActivity" />
+        <activity android:name=".ui.CountDownActivity"></activity>
     </application>
 
 </manifest>
