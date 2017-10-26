@@ -1,25 +1,18 @@
 package com.leiholmes.rxbindingdemo;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewAfterTextChangeEvent;
 import com.jakewharton.rxbinding2.widget.TextViewBeforeTextChangeEvent;
-import com.jakewharton.rxbinding2.widget.TextViewEditorActionEvent;
-import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -28,17 +21,17 @@ import io.reactivex.functions.Function;
  * author         xulei
  * Date           2017/10/25 13:50
  */
-public class RxTextViewActivity extends AppCompatActivity {
+public class RxTextViewActivity extends BaseActivity {
     @BindView(R.id.et_rx_text_view)
     EditText etRxTextView;
-    private CompositeDisposable mCompositeDisposable;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rx_text_view);
-        ButterKnife.bind(this);
-        mCompositeDisposable = new CompositeDisposable();
+    protected int getLayoutId() {
+        return R.layout.activity_rx_text_view;
+    }
+
+    @Override
+    protected void onViewCreated(Bundle savedInstanceState) {
         textChanges();
 //        beforeTextChangeEvents();
 //        afterTextChangeEvents();
@@ -139,30 +132,5 @@ public class RxTextViewActivity extends AppCompatActivity {
 //                        }
 //                    }
 //                }));
-    }
-
-    /**
-     * 添加订阅
-     */
-    public void addDisposable(Disposable mDisposable) {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable = new CompositeDisposable();
-        }
-        mCompositeDisposable.add(mDisposable);
-    }
-
-    /**
-     * 取消所有订阅
-     */
-    public void unSubscribe() {
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        unSubscribe();
-        super.onDestroy();
     }
 }

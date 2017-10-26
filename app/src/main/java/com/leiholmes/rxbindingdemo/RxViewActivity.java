@@ -3,7 +3,6 @@ package com.leiholmes.rxbindingdemo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +14,6 @@ import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -25,7 +21,7 @@ import io.reactivex.functions.Consumer;
  * author         xulei
  * Date           2017/10/25 09:51
  */
-public class RxViewActivity extends AppCompatActivity {
+public class RxViewActivity extends BaseActivity {
     @BindView(R.id.btn_click)
     Button btnClick;
     @BindView(R.id.btn_layout)
@@ -40,16 +36,16 @@ public class RxViewActivity extends AppCompatActivity {
     Button btnScrollLayout;
     @BindView(R.id.btn_scroll)
     Button btnScroll;
-    private CompositeDisposable mCompositeDisposable;
     private int x;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_rx_view;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rx_view);
-        ButterKnife.bind(this);
-        mCompositeDisposable = new CompositeDisposable();
+    protected void onViewCreated(Bundle savedInstanceState) {
         click();
         draws();
         layoutChange();
@@ -158,30 +154,5 @@ public class RxViewActivity extends AppCompatActivity {
                         Toast.makeText(RxViewActivity.this, "btnScrollLayout滑动了", Toast.LENGTH_SHORT).show();
                     }
                 }));
-    }
-
-    /**
-     * 添加订阅
-     */
-    public void addDisposable(Disposable mDisposable) {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable = new CompositeDisposable();
-        }
-        mCompositeDisposable.add(mDisposable);
-    }
-
-    /**
-     * 取消所有订阅
-     */
-    public void unSubscribe() {
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        unSubscribe();
-        super.onDestroy();
     }
 }
