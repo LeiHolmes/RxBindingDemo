@@ -1,4 +1,4 @@
-package com.leiholmes.rxbindingdemo;
+package com.leiholmes.rxbindingdemo.ui;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
+import com.leiholmes.rxbindingdemo.R;
 
 import java.util.concurrent.TimeUnit;
 

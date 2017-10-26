@@ -1,4 +1,4 @@
-package com.leiholmes.rxbindingdemo;
+package com.leiholmes.rxbindingdemo.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewAfterTextChangeEvent;
 import com.jakewharton.rxbinding2.widget.TextViewBeforeTextChangeEvent;
+import com.leiholmes.rxbindingdemo.R;
 
 import java.util.concurrent.TimeUnit;
 

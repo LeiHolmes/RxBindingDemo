@@ -1,4 +1,4 @@
-package com.leiholmes.rxbindingdemo;
+package com.leiholmes.rxbindingdemo.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
+import com.leiholmes.rxbindingdemo.R;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,8 +1,10 @@
-package com.leiholmes.rxbindingdemo;
+package com.leiholmes.rxbindingdemo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.leiholmes.rxbindingdemo.R;
 
 import butterknife.OnClick;
 
