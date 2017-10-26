@@ -45,22 +45,14 @@ public class RxCompoundButtonActivity extends BaseActivity {
         btnLogin.setEnabled(false);
         btnLogin.setClickable(false);
         RxCompoundButton.checkedChanges(cbContract)
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        btnLogin.setEnabled(aBoolean);
-                        btnLogin.setClickable(aBoolean);
-                        btnLogin.setBackgroundResource(aBoolean ? R.color.colorPrimary : R.color.colorGray);
-                        btnLogin.setTextColor(aBoolean ? Color.parseColor("#ffffff") : Color.parseColor("#000000"));
-                    }
+                .subscribe(aBoolean -> {
+                    btnLogin.setEnabled(aBoolean);
+                    btnLogin.setClickable(aBoolean);
+                    btnLogin.setBackgroundResource(aBoolean ? R.color.colorPrimary : R.color.colorGray);
+                    btnLogin.setTextColor(aBoolean ? Color.parseColor("#ffffff") : Color.parseColor("#000000"));
                 });
         RxView.clicks(btnLogin)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        Toast.makeText(RxCompoundButtonActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .subscribe(o -> Toast.makeText(RxCompoundButtonActivity.this, "登录成功", Toast.LENGTH_SHORT).show());
     }
 }

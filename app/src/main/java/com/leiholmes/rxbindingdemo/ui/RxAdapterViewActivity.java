@@ -57,12 +57,7 @@ public class RxAdapterViewActivity extends BaseActivity {
     private void itemClicks() {
         RxAdapterView.itemClicks(lvList)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        Toast.makeText(RxAdapterViewActivity.this, "点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .subscribe(integer -> Toast.makeText(RxAdapterViewActivity.this, "点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show());
         //需要详细点击信息的可使用itemClickEvents(AdapterView view)
     }
 
@@ -72,12 +67,7 @@ public class RxAdapterViewActivity extends BaseActivity {
     private void itemLongClicks() {
         RxAdapterView.itemLongClicks(lvList)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        Toast.makeText(RxAdapterViewActivity.this, "长点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .subscribe(integer -> Toast.makeText(RxAdapterViewActivity.this, "长点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show());
         //需要详细长点击信息的可使用itemLongClickEvents(AdapterView view)
     }
 
@@ -87,12 +77,7 @@ public class RxAdapterViewActivity extends BaseActivity {
      */
     private void itemSelections() {
         RxAdapterView.itemSelections(lvList)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        Log.e("rx_binding_test", "itemSelections：" + integer);
-                    }
-                });
+                .subscribe(integer -> Log.e("rx_binding_test", "itemSelections：" + integer));
         //需要详细选中信息的可使用selectionEvents(AdapterView view)
     }
 }

@@ -60,21 +60,15 @@ public class RxViewActivity extends BaseActivity {
         //2s防抖点击
         addDisposable(RxView.clicks(btnClick)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        Log.e("rx_binding_test", "clicks:点击了按钮：两秒内防抖");
-                        Toast.makeText(RxViewActivity.this, "点击了按钮：两秒内防抖", Toast.LENGTH_SHORT).show();
-                    }
+                .subscribe(o -> {
+                    Log.e("rx_binding_test", "clicks:点击了按钮：两秒内防抖");
+                    Toast.makeText(RxViewActivity.this, "点击了按钮：两秒内防抖", Toast.LENGTH_SHORT).show();
                 }));
         //长点击
         addDisposable(RxView.longClicks(btnClick)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        Log.e("rx_binding_test", "longClicks:长点击了按钮");
-                        Toast.makeText(RxViewActivity.this, "长点击了按钮", Toast.LENGTH_SHORT).show();
-                    }
+                .subscribe(o -> {
+                    Log.e("rx_binding_test", "longClicks:长点击了按钮");
+                    Toast.makeText(RxViewActivity.this, "长点击了按钮", Toast.LENGTH_SHORT).show();
                 }));
     }
 
@@ -85,21 +79,15 @@ public class RxViewActivity extends BaseActivity {
         //点击btnDraw调用viewCanvas的绘制
         addDisposable(RxView.clicks(btnDraw)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        //模拟让viewCanvas绘制,这个方法不好用
-//                        viewCanvas.getViewTreeObserver().dispatchOnDraw();
-                    }
+                .subscribe(o -> {
+                    //模拟让viewCanvas绘制,这个方法不好用
+                    //viewCanvas.getViewTreeObserver().dispatchOnDraw();
                 }));
         //当viewCanvas绘制时触发
         addDisposable(RxView.draws(viewCanvas)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        Log.e("rx_binding_test", "draws:viewCanvas绘制了");
-                        Toast.makeText(RxViewActivity.this, "viewCanvas绘制了", Toast.LENGTH_SHORT).show();
-                    }
+                .subscribe(o -> {
+                    Log.e("rx_binding_test", "draws:viewCanvas绘制了");
+                    Toast.makeText(RxViewActivity.this, "viewCanvas绘制了", Toast.LENGTH_SHORT).show();
                 }));
     }
 
@@ -110,21 +98,14 @@ public class RxViewActivity extends BaseActivity {
         //点击btnChange改变btn_layout的布局,防抖2s
         addDisposable(RxView.clicks(btnChange)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        btnLayout.layout(btnLayout.getLeft() - 20, btnLayout.getTop(),
-                                btnLayout.getRight() - 20, btnLayout.getBottom());
-                    }
-                }));
+                .subscribe(o -> btnLayout.layout(btnLayout.getLeft() - 20, btnLayout.getTop(),
+                        btnLayout.getRight() - 20, btnLayout.getBottom())
+                ));
         //btn_layout布局改变时触发
         addDisposable(RxView.layoutChanges(btnLayout)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        Log.e("rx_binding_test", "layoutChanges:btnLayout布局改变了");
-                        Toast.makeText(RxViewActivity.this, "btnLayout布局改变了", Toast.LENGTH_SHORT).show();
-                    }
+                .subscribe(o -> {
+                    Log.e("rx_binding_test", "layoutChanges:btnLayout布局改变了");
+                    Toast.makeText(RxViewActivity.this, "btnLayout布局改变了", Toast.LENGTH_SHORT).show();
                 }));
     }
 
@@ -136,24 +117,18 @@ public class RxViewActivity extends BaseActivity {
         //点击btnScroll模拟让btnScrollLayout滑动
         addDisposable(RxView.clicks(btnScroll)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        x += 10;
-                        if (x == 100) {
-                            x = 0;
-                        }
-                        btnScrollLayout.scrollTo(x, 0);
+                .subscribe(o -> {
+                    x += 10;
+                    if (x == 100) {
+                        x = 0;
                     }
+                    btnScrollLayout.scrollTo(x, 0);
                 }));
         //btnScrollLayout滑动时触发
         addDisposable(RxView.scrollChangeEvents(btnScrollLayout)
-                .subscribe(new Consumer<ViewScrollChangeEvent>() {
-                    @Override
-                    public void accept(ViewScrollChangeEvent viewScrollChangeEvent) throws Exception {
-                        Log.e("rx_binding_test", "scrollChangeEvents:btnScrollLayout滑动了:" + viewScrollChangeEvent.toString());
-                        Toast.makeText(RxViewActivity.this, "btnScrollLayout滑动了", Toast.LENGTH_SHORT).show();
-                    }
+                .subscribe(viewScrollChangeEvent -> {
+                    Log.e("rx_binding_test", "scrollChangeEvents:btnScrollLayout滑动了:" + viewScrollChangeEvent.toString());
+                    Toast.makeText(RxViewActivity.this, "btnScrollLayout滑动了", Toast.LENGTH_SHORT).show();
                 }));
     }
 }
