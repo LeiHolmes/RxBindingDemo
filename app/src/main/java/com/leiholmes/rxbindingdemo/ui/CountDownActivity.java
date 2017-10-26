@@ -38,11 +38,13 @@ public class CountDownActivity extends BaseActivity {
                 //点击后设置为不可点击
                 .doOnNext(o -> RxView.enabled(btnGetCode).accept(false))
                 .subscribe(o -> {
-                            //从1-10依次输出数字，延时0s执行，每1s发射一次。
-                            addDisposable(Flowable.intervalRange(1, 10, 0, 1, TimeUnit.SECONDS)
+                            //从0开始发射11个数字为：0-10依次输出，延时0s执行，每1s发射一次。
+                            addDisposable(Flowable.intervalRange(0, 11, 0, 1, TimeUnit.SECONDS)
                                     .observeOn(AndroidSchedulers.mainThread())
                                     //每次发射数字更新UI
-                                    .doOnNext(aLong -> RxTextView.text(btnGetCode).accept("重新获取(" + (10 - aLong) + ")"))
+                                    .doOnNext(aLong -> {
+                                        RxTextView.text(btnGetCode).accept("重新获取(" + (10 - aLong) + ")");
+                                    })
                                     //倒计时完毕更新UI，设置为可点击
                                     .doOnComplete(() -> {
                                         RxView.enabled(btnGetCode).accept(true);
