@@ -1,2 +1,2 @@
 # RxBindingDemo
-RxBinding使用Demo
+RxBinding使用详解Demo
