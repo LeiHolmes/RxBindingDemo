@@ -1,2 +1,6 @@
 # RxBindingDemo
-RxBinding使用详解Demo
+RxBinding使用详解Demo  
+RxView  
+RxTextView  
+RxCompoundButton  
+RxAdapterView
