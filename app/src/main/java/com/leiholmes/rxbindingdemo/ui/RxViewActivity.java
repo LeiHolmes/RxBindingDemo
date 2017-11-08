@@ -47,16 +47,17 @@ public class RxViewActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onViewCreated(Bundle savedInstanceState) {
-        click();
+        clicks();
         draws();
-        layoutChange();
+        drags();
+        layoutChanges();
         scrollChange();
     }
 
     /**
      * 点击事件
      */
-    private void click() {
+    private void clicks() {
         //2s防抖点击
         addDisposable(RxView.clicks(btnClick)
                 .throttleFirst(2, TimeUnit.SECONDS)
@@ -92,9 +93,20 @@ public class RxViewActivity extends BaseActivity {
     }
 
     /**
+     * 拖拽事件
+     */
+    private void drags() {
+        //当btnDraw被拖拽时触发
+        addDisposable(RxView.drags(btnDraw)
+                .subscribe(o -> {
+                    Log.e("rx_binding_test", "drags:btnDraw被拖拽了");
+                    Toast.makeText(RxViewActivity.this, "btnDraw被拖拽了", Toast.LENGTH_SHORT).show();
+                }));
+    }
+    /**
      * 布局改变事件
      */
-    private void layoutChange() {
+    private void layoutChanges() {
         //点击btnChange改变btn_layout的布局,防抖2s
         addDisposable(RxView.clicks(btnChange)
                 .throttleFirst(2, TimeUnit.SECONDS)
