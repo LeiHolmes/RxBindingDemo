@@ -52,6 +52,7 @@ public class RxViewActivity extends BaseActivity {
         drags();
         layoutChanges();
         scrollChange();
+//        viewOperate();
     }
 
     /**
@@ -103,6 +104,7 @@ public class RxViewActivity extends BaseActivity {
                     Toast.makeText(RxViewActivity.this, "btnDraw被拖拽了", Toast.LENGTH_SHORT).show();
                 }));
     }
+
     /**
      * 布局改变事件
      */
@@ -141,6 +143,19 @@ public class RxViewActivity extends BaseActivity {
                 .subscribe(viewScrollChangeEvent -> {
                     Log.e("rx_binding_test", "scrollChangeEvents:btnScrollLayout滑动了:" + viewScrollChangeEvent.toString());
                     Toast.makeText(RxViewActivity.this, "btnScrollLayout滑动了", Toast.LENGTH_SHORT).show();
+                }));
+    }
+
+    /**
+     * View的操作
+     */
+    private void viewOperate() {
+        addDisposable(RxView.clicks(btnClick)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe(o -> {
+                    RxView.visibility(btnClick).accept(true);
+                    RxView.clickable(btnClick).accept(true);
+                    RxView.enabled(btnClick).accept(true);
                 }));
     }
 }

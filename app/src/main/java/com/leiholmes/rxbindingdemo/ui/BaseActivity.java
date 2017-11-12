@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 取消所有订阅
      */
-    public void unSubscribe() {
+    public void clearDisposable() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();
         }
@@ -48,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unSubscribe();
+        clearDisposable();
         mUnbinder.unbind();
     }
 
