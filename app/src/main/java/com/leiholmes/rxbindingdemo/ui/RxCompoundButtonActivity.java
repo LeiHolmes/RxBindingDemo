@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.leiholmes.rxbindingdemo.R;
 
 import java.util.concurrent.TimeUnit;
@@ -38,21 +39,28 @@ public class RxCompoundButtonActivity extends BaseActivity {
 
     /**
      * CheckBox选中状态改变事件
-     * 实际项目中会遇到需要用户确认协议后才可登录的需求
+     * 实际项目中会遇到需要用户确认协议后才可注册的需求
      */
     private void checkedChanges() {
-        //默认不可点击
+        //默认注册按钮不可点击
         btnLogin.setEnabled(false);
-        btnLogin.setClickable(false);
-        RxCompoundButton.checkedChanges(cbContract)
+        addDisposable(RxCompoundButton.checkedChanges(cbContract)
                 .subscribe(aBoolean -> {
-                    btnLogin.setEnabled(aBoolean);
-                    btnLogin.setClickable(aBoolean);
+                    RxView.enabled(btnLogin).accept(aBoolean);
                     btnLogin.setBackgroundResource(aBoolean ? R.color.colorPrimary : R.color.colorGray);
-                    btnLogin.setTextColor(aBoolean ? Color.parseColor("#ffffff") : Color.parseColor("#000000"));
-                });
-        RxView.clicks(btnLogin)
+                    RxTextView.color(btnLogin).accept(aBoolean ? Color.parseColor("#ffffff") :
+                            Color.parseColor("#000000"));
+                }));
+        addDisposable(RxView.clicks(btnLogin)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(o -> Toast.makeText(RxCompoundButtonActivity.this, "登录成功", Toast.LENGTH_SHORT).show());
+                .subscribe(o -> Toast.makeText(RxCompoundButtonActivity.this, "注册成功",
+                        Toast.LENGTH_SHORT).show()));
+        
+        //CompoundButton操作
+//        addDisposable(RxView.clicks(btnLogin)
+//                .subscribe(o -> {
+//                    RxCompoundButton.checked(cbContract).accept(true);
+//                    RxCompoundButton.toggle(cbContract).accept(null);
+//                }));
     }
 }

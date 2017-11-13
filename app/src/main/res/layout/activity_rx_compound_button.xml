@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorGray"
-        android:text="登录" />
+        android:text="注册" />
 
     <CheckBox
         android:id="@+id/cb_contract"

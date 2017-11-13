@@ -73,7 +73,7 @@ public class RxAdapterViewActivity extends BaseActivity {
 
     /**
      * 条目被选中的事件
-     * 其条目下需要有可被selected的控件才会触发
+     * 其条目下需要有可被selected的控件才会触发                  
      */
     private void itemSelections() {
         RxAdapterView.itemSelections(lvList)

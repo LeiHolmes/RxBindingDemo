@@ -1,5 +1,6 @@
 package com.leiholmes.rxbindingdemo.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -38,6 +39,13 @@ public class RxTextViewActivity extends BaseActivity {
 //        beforeTextChangeEvents();
 //        afterTextChangeEvents();
         editorActions();
+
+        addDisposable(RxTextView.editorActions(etRxTextView)
+                .subscribe(integer -> {
+                    RxTextView.text(etRxTextView).accept("LeiHolmes");
+                    RxTextView.hint(etRxTextView).accept("请输入姓名");
+                    RxTextView.color(etRxTextView).accept(Color.parseColor("#00ff00"));
+                }));
     }
 
     /**
@@ -98,20 +106,18 @@ public class RxTextViewActivity extends BaseActivity {
      */
     private void editorActions() {
         addDisposable(RxTextView.editorActions(etRxTextView)
-                .subscribe(
-                        integer -> {
-                            Log.e("rx_binding_test", "editorActions:输入完毕，点击回车:");
-                            Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
-                        }));
+                .subscribe(integer -> {
+                    Log.e("rx_binding_test", "editorActions:输入完毕，点击回车:");
+                    Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
+                }));
         addDisposable(RxTextView.editorActionEvents(etRxTextView)
-                .subscribe(
-                        textViewEditorActionEvent -> {
-                            KeyEvent keyEvent = textViewEditorActionEvent.keyEvent();
-                            //解决走两次问题
-                            if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                                Log.e("rx_binding_test", "editorActionEvents:输入完毕，点击回车:" + textViewEditorActionEvent.keyEvent());
-                                Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
-                            }
-                        }));
+                .subscribe(textViewEditorActionEvent -> {
+                    KeyEvent keyEvent = textViewEditorActionEvent.keyEvent();
+                    //解决走两次问题
+                    if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                        Log.e("rx_binding_test", "editorActionEvents:输入完毕，点击回车:" + textViewEditorActionEvent.keyEvent());
+                        Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
+                    }
+                }));
     }
 }
