@@ -33,7 +33,7 @@ public class CountDownActivity extends BaseActivity {
         addDisposable(RxView.clicks(btnGetCode)
                 //1s防抖
                 .throttleFirst(1, TimeUnit.SECONDS)
-                //UI线程 
+                //UI线程
                 .observeOn(AndroidSchedulers.mainThread())
                 //点击后设置为不可点击
                 .doOnNext(o -> RxView.enabled(btnGetCode).accept(false))
