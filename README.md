@@ -12,4 +12,4 @@ RxAdapterView的itemClicks，itemLongClicks，itemSelections等事件讲解
 ### RxCompoundButtonActivity
 RxCompoundButton的checkedChanges等事件讲解
 ### CountDownActivity
-倒计时实例
+倒计时实例演示
