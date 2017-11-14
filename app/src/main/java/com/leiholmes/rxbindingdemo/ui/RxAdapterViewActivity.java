@@ -3,6 +3,7 @@ package com.leiholmes.rxbindingdemo.ui;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class RxAdapterViewActivity extends BaseActivity {
         itemClicks();
         itemLongClicks();
         itemSelections();
+        itemViewOperate();
     }
 
     private void initData() {
@@ -55,9 +57,10 @@ public class RxAdapterViewActivity extends BaseActivity {
      * ListView或GridView等item点击事件
      */
     private void itemClicks() {
-        RxAdapterView.itemClicks(lvList)
+        addDisposable(RxAdapterView.itemClicks(lvList)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(integer -> Toast.makeText(RxAdapterViewActivity.this, "点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show());
+                .subscribe(integer -> Toast.makeText(RxAdapterViewActivity.this,
+                        "点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show()));
         //需要详细点击信息的可使用itemClickEvents(AdapterView view)
     }
 
@@ -65,19 +68,29 @@ public class RxAdapterViewActivity extends BaseActivity {
      * ListView或GridView等item长点击事件
      */
     private void itemLongClicks() {
-        RxAdapterView.itemLongClicks(lvList)
+        addDisposable(RxAdapterView.itemLongClicks(lvList)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(integer -> Toast.makeText(RxAdapterViewActivity.this, "长点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show());
+                .subscribe(integer -> Toast.makeText(RxAdapterViewActivity.this,
+                        "长点击了第" + integer + "条：" + list.get(integer), Toast.LENGTH_SHORT).show()));
         //需要详细长点击信息的可使用itemLongClickEvents(AdapterView view)
     }
 
     /**
      * 条目被选中的事件
-     * 其条目下需要有可被selected的控件才会触发                  
+     * 其条目下需要有可被selected的控件才会触发
      */
     private void itemSelections() {
-        RxAdapterView.itemSelections(lvList)
-                .subscribe(integer -> Log.e("rx_binding_test", "itemSelections：" + integer));
+        addDisposable(RxAdapterView.itemSelections(lvList)
+                .subscribe(integer -> Log.e("rx_binding_test", "itemSelections：" + integer)));
         //需要详细选中信息的可使用selectionEvents(AdapterView view)
+    }
+
+    /**
+     * ItemView操作
+     */
+    private void itemViewOperate() {
+        addDisposable(RxAdapterView.itemClicks(lvList)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe(integer -> RxAdapterView.selection(lvList).accept(0)));
     }
 }

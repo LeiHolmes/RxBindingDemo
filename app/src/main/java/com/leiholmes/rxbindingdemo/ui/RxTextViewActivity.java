@@ -39,13 +39,7 @@ public class RxTextViewActivity extends BaseActivity {
 //        beforeTextChangeEvents();
 //        afterTextChangeEvents();
         editorActions();
-
-        addDisposable(RxTextView.editorActions(etRxTextView)
-                .subscribe(integer -> {
-                    RxTextView.text(etRxTextView).accept("LeiHolmes");
-                    RxTextView.hint(etRxTextView).accept("请输入姓名");
-                    RxTextView.color(etRxTextView).accept(Color.parseColor("#00ff00"));
-                }));
+//        textViewOperate();
     }
 
     /**
@@ -118,6 +112,18 @@ public class RxTextViewActivity extends BaseActivity {
                         Log.e("rx_binding_test", "editorActionEvents:输入完毕，点击回车:" + textViewEditorActionEvent.keyEvent());
                         Toast.makeText(RxTextViewActivity.this, "输入完毕，点击回车", Toast.LENGTH_SHORT).show();
                     }
+                }));
+    }
+
+    /**
+     * TextView的操作
+     */
+    private void textViewOperate() {
+        addDisposable(RxTextView.editorActions(etRxTextView)
+                .subscribe(integer -> {
+                    RxTextView.text(etRxTextView).accept("LeiHolmes");
+                    RxTextView.hint(etRxTextView).accept("请输入姓名");
+                    RxTextView.color(etRxTextView).accept(Color.parseColor("#00ff00"));
                 }));
     }
 }

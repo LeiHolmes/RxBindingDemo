@@ -35,6 +35,7 @@ public class RxCompoundButtonActivity extends BaseActivity {
     @Override
     protected void onViewCreated(Bundle savedInstanceState) {
         checkedChanges();
+//        compoundButtonOperate();
     }
 
     /**
@@ -55,12 +56,16 @@ public class RxCompoundButtonActivity extends BaseActivity {
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe(o -> Toast.makeText(RxCompoundButtonActivity.this, "注册成功",
                         Toast.LENGTH_SHORT).show()));
-        
-        //CompoundButton操作
-//        addDisposable(RxView.clicks(btnLogin)
-//                .subscribe(o -> {
-//                    RxCompoundButton.checked(cbContract).accept(true);
-//                    RxCompoundButton.toggle(cbContract).accept(null);
-//                }));
+    }
+
+    /**
+     * CompoundButton操作
+     */
+    private void compoundButtonOperate() {
+        addDisposable(RxView.clicks(btnLogin)
+                .subscribe(o -> {
+                    RxCompoundButton.checked(cbContract).accept(true);
+                    RxCompoundButton.toggle(cbContract).accept(null);
+                }));
     }
 }
