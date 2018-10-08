@@ -11,6 +11,6 @@ RxTextView的textChanges，editorActions等事件的讲解
 RxAdapterView的itemClicks，itemLongClicks，itemSelections等事件的讲解
 ### RxCompoundButtonActivity
 RxCompoundButton的checkedChanges等事件的讲解
-### CountDownActivity
+### CountDownActivity 
 倒计时实例的演示 
  
